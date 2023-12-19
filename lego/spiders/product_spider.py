@@ -31,7 +31,7 @@ class AvailabilitySpider(scrapy.Spider):
     def parse(self, response: scrapy.http.Response, **kwargs):
         page = response.url
         self.log(page)
-        if "de-de/product" in page:
+        if "en-us/product" in page:
             if response.css(".eqJexe .hlipzx::text").get():
                 self.log("############# Product page: " + page + " #############")
 
@@ -62,19 +62,19 @@ class LegoProductSpider(scrapy.Spider):
     def __init__(self, name=None, **kwargs):
         super().__init__(name=name, **kwargs)
         self.link_extractor = LinkExtractor(
-            allow=[r".*lego\.com/de-de.*"],
+            allow=[r".*lego\.com/en-us.*"],
             deny=[r".*lego\.com(.*)(\.\w{1,3})$", r".*@lego\.com.*"],
         )
 
     def start_requests(self):
-        urls = ["https://www.lego.com/de-de/themes"]
+        urls = ["https://www.lego.com/en-us/themes"]
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response: scrapy.http.Response, **kwargs):
         page = response.url
         self.log(page)
-        if "de-de/product" in page:
+        if "en-us/product" in page:
             if response.css(".eqJexe .hlipzx::text").get():
                 self.log("############# Found product page: " + page + " #############")
 
